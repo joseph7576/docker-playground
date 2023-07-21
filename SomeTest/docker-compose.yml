@@ -1,0 +1,45 @@
+version: "3.8"
+
+
+# order from to back :D
+# not real docker-compose but a close one
+services:
+
+  web:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    environment:
+      - DB_URL=mongodb://db/vidly
+    command: ["executable", "arg"]  
+
+  api:
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: mongodb
+    command: command
+      
+  web-tests:
+    # reuse the existing image
+    image: vidly_web
+    volumes:
+      - ./frontend:/app
+    command: npm test
+
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+
+    volumes:
+      - vidly:/data/db
+    build:
+      context: contextPath
+      dockerfile: Dockerfile
+
+
+# we have to make the volumes / define it first then use it
+volumes:
+  vidly:
