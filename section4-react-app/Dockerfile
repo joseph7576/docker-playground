@@ -3,9 +3,12 @@ FROM node:lts-alpine3.18
 
 # these line should be type in case we might encounter premission error for writing or exec commands
 # add user and group
-RUN addgroup app && adduser -SG app app
+# RUN addgroup app && adduser -SG app app
 # set the user
-USER app
+# USER app
+
+# using user node
+USER root
 
 # set workdir
 WORKDIR /app
@@ -16,6 +19,9 @@ COPY package*.json .
 # run commands
 # this will be cache if we don't change the packages in out application
 RUN npm install 
+
+# fix npm stuff
+RUN npm audit fix --force
 
 # optimization
 COPY . .
