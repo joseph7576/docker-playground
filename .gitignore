@@ -162,3 +162,7 @@ configure.json
 credentials.json
 
 *.pdf
+
+.env*
+env/
+
