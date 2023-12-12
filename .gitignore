@@ -166,3 +166,4 @@ credentials.json
 .env*
 env/
 
+tags
